@@ -14,18 +14,24 @@
 int main() {
   struct School school;
   struct Student* test;
+  struct SchoolClass* test2;
   
   test = createStudent("Ruben", "Yoo", "0541111119");
 
   printf("\nThe entered first name is : %s", test->first_name);
   printf("\nThe entered last name is : %s", test->last_name);
   printf("\nThe entered telephone is : %s", test->telephone);
+  printf("\n");
 
   addGrade(test, 59);
   addGrade(test, 60);
   addGrade(test, 61);
 
-  freeStudent(test);
+  test2 = createSchoolClass(0);
+  addStudent(test2, test);
+
+
+  freeSchoolClass(test2);
 
   return 0;
 }

@@ -1,3 +1,6 @@
+#ifndef STUDENT_C
+#define STUDENT_C
+
 #include "../include/Student.h"
 
 struct Student* createStudent(const char* first_name, const char* last_name, const char* telephone) {
@@ -55,3 +58,5 @@ void addGrade(struct Student* student, int grade) {
     tmp->next = malloc(sizeof(struct node));
     tmp->next->grade = grade;
 }
+
+#endif

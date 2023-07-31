@@ -1,4 +1,8 @@
+#ifndef SCHOOLCLASS_C
+#define SCHOOLCLASS_C
+
 #include "../include/SchoolClass.h"
+#include "Student.c"
 
 struct SchoolClass* createSchoolClass(int class_num) {
 
@@ -17,19 +21,20 @@ struct SchoolClass* createSchoolClass(int class_num) {
 
 void freeStudentsList(struct Node* head)
 {
-   struct node* tmp;
+    struct Node* tmp;
 
-   while (head != NULL)
+    while (head != NULL)
     {
        tmp = head;
        head = head->next;
+       freeStudent(tmp->student);
        free(tmp);
     }
 }
 
 void freeSchoolClass(struct SchoolClass* schoolClass)
 {
-    freeStudentsList(schoolClass);
+    freeStudentsList(schoolClass->head);
     free(schoolClass);
 }
 
@@ -42,7 +47,7 @@ void addStudent(struct SchoolClass* schoolClass, struct Student* student) {
     {
         tmp = malloc(sizeof(struct Node));
         tmp->student = student;
-        student->head = tmp;
+        schoolClass->head = tmp;
         return;
     }
 
@@ -52,3 +57,5 @@ void addStudent(struct SchoolClass* schoolClass, struct Student* student) {
     tmp->next = malloc(sizeof(struct Node));
     tmp->next->student = student;
 }
+
+#endif
