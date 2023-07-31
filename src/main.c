@@ -21,5 +21,7 @@ int main() {
   printf("\nThe entered last name is : %s", test->last_name);
   printf("\nThe entered telephone is : %s", test->telephone);
 
+  freeStudent(test);
+
   return 0;
 }
