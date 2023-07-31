@@ -5,5 +5,6 @@ struct SchoolClass
         struct Node* next;
     } *head;
 
-    int num_students;
+    int num_of_students;
+    int class_number;
 };
