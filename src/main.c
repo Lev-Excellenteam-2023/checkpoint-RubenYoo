@@ -36,30 +36,22 @@ void printDatabase(struct School* school)
     for (size_t j = 0; j < NUMBER_OF_CLASSES; j++)
     {
       printf("class Number: %zu\n", j);
-      struct Node* tmp1 = school->levels[i]->classes[j]->head;
+      struct Node* tmp = school->levels[i]->classes[j]->head;
 
-      while(tmp1 != NULL)
+      while(tmp != NULL)
       {
         printf("Student informations:\n");
-        printf("First name: %s\n", tmp1->student->first_name);
-        printf("Last name: %s\n", tmp1->student->last_name);
-        printf("Telephone: %s\n", tmp1->student->telephone);
+        printf("First name: %s\n", tmp->student->first_name);
+        printf("Last name: %s\n", tmp->student->last_name);
+        printf("Telephone: %s\n", tmp->student->telephone);
         
-        struct node* tmp2 = tmp1->student->head;
-        while (tmp2 != NULL)
-        {
-          printf("Grade: %d\n", tmp2->grade);
-          tmp2 = tmp2->next;
+        for (size_t k = 0; k < tmp->student->num_of_grades; k++)
+          printf("Grade %zu: %d\n", k, tmp->student->grades[k]);
 
-        }
-        
-        tmp1 = tmp1->next;
+        tmp = tmp->next;
       }
-      
     }
-    
   }
-  
 }
 
 
