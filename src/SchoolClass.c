@@ -48,6 +48,7 @@ void addStudent(struct SchoolClass* schoolClass, struct Student* student) {
         tmp = malloc(sizeof(struct Node));
         tmp->student = student;
         schoolClass->head = tmp;
+        tmp->next = NULL;
         return;
     }
 
