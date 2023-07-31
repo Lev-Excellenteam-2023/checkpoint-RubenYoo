@@ -13,33 +13,62 @@
 #define MAX_LINE_LENGTH 256
 #define DELIMITERS " \t\n"
 
-void readDatabase(const struct School* school);
-void printDatabase(const struct School* school);
+void readDatabase(struct School* school);
+void printDatabase(struct School* school);
 
 int main() {
 
   struct School* school = createSchool();
-  readDatabase(school);
-  
-  
 
+  readDatabase(school);
+  printDatabase(school);
+  
   freeSchool(school);
 
   return 0;
 }
 
-void printDatabase(const struct School* school)
+void printDatabase(struct School* school)
 {
+  for (size_t i = 0; i < NUMBER_OF_LEVELS; i++)
+  {
+    printf("Level Number: %zu\n", i);
+    for (size_t j = 0; j < NUMBER_OF_CLASSES; j++)
+    {
+      printf("class Number: %zu\n", j);
+      struct Node* tmp1 = school->levels[i]->classes[j]->head;
+
+      while(tmp1 != NULL)
+      {
+        printf("Student informations:\n");
+        printf("First name: %s\n", tmp1->student->first_name);
+        printf("Last name: %s\n", tmp1->student->last_name);
+        printf("Telephone: %s\n", tmp1->student->telephone);
+        
+        struct node* tmp2 = tmp1->student->head;
+        while (tmp2 != NULL)
+        {
+          printf("Grade: %d\n", tmp2->grade);
+          tmp2 = tmp2->next;
+
+        }
+        
+        tmp1 = tmp1->next;
+      }
+      
+    }
+    
+  }
   
 }
 
 
-void readDatabase(const struct School* school)
+void readDatabase(struct School* school)
 {
   FILE* file = fopen("../students_with_class.txt", "r");
   if (file == NULL) {
       perror("Error opening the file");
-      return 1;
+      return;
   }
 
   char line[MAX_LINE_LENGTH];
@@ -66,8 +95,6 @@ void readDatabase(const struct School* school)
           addGrade(student, grade);
           word = strtok(NULL, DELIMITERS);
       }
-
-      printf("Telephone: %s\n", telephone);
   }
 
   fclose(file);
