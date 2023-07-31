@@ -17,7 +17,7 @@ struct Student* createStudent(const char* first_name, const char* last_name, con
     return student;
 }
 
-void freeLinkedList(struct node* head)
+void freeGradesList(struct node* head)
 {
    struct node* tmp;
 
@@ -32,10 +32,26 @@ void freeLinkedList(struct node* head)
 void freeStudent(struct Student* student) {
     free(student->first_name);
     free(student->last_name);
-    freeLinkedList(student->head);
+    freeGradesList(student->head);
     free(student);
 }
 
-void addGrade(struct Student* student) {
+void addGrade(struct Student* student, int grade) {
+    student->num_of_grades += 1;
     
+    struct node* tmp = student->head;
+
+    if(tmp == NULL)
+    {
+        tmp = malloc(sizeof(struct node));
+        tmp->grade = grade;
+        student->head = tmp;
+        return;
+    }
+
+    while (tmp->next != NULL)
+        tmp = tmp->next;
+    
+    tmp->next = malloc(sizeof(struct node));
+    tmp->next->grade = grade;
 }

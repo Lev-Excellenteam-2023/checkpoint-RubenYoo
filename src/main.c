@@ -21,6 +21,10 @@ int main() {
   printf("\nThe entered last name is : %s", test->last_name);
   printf("\nThe entered telephone is : %s", test->telephone);
 
+  addGrade(test, 59);
+  addGrade(test, 60);
+  addGrade(test, 61);
+
   freeStudent(test);
 
   return 0;
