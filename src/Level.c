@@ -33,7 +33,7 @@ void freeLevel(struct Level* level)
 }
 
 void addStudentToClass(struct Level* level, struct Student* student, int class_num) {
-    addStudent(level->classes[class_num], student);
+    addStudent(level->classes[class_num - 1], student);
 }
 
 #endif

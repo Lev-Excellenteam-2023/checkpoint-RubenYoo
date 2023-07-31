@@ -57,6 +57,7 @@ void addGrade(struct Student* student, int grade) {
     
     tmp->next = malloc(sizeof(struct node));
     tmp->next->grade = grade;
+    tmp->next->next = NULL;
 }
 
 #endif

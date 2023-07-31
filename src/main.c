@@ -10,28 +10,65 @@
 #include "SchoolClass.c"
 #include "Student.c"
 
+#define MAX_LINE_LENGTH 256
+#define DELIMITERS " \t\n"
+
+void readDatabase(const struct School* school);
+void printDatabase(const struct School* school);
 
 int main() {
-  struct School school;
-  struct Student* test;
-  struct SchoolClass* test2;
+
+  struct School* school = createSchool();
+  readDatabase(school);
   
-  test = createStudent("Ruben", "Yoo", "0541111119");
+  
 
-  printf("\nThe entered first name is : %s", test->first_name);
-  printf("\nThe entered last name is : %s", test->last_name);
-  printf("\nThe entered telephone is : %s", test->telephone);
-  printf("\n");
-
-  addGrade(test, 59);
-  addGrade(test, 60);
-  addGrade(test, 61);
-
-  test2 = createSchoolClass(0);
-  addStudent(test2, test);
-
-
-  freeSchoolClass(test2);
+  freeSchool(school);
 
   return 0;
+}
+
+void printDatabase(const struct School* school)
+{
+  
+}
+
+
+void readDatabase(const struct School* school)
+{
+  FILE* file = fopen("../students_with_class.txt", "r");
+  if (file == NULL) {
+      perror("Error opening the file");
+      return 1;
+  }
+
+  char line[MAX_LINE_LENGTH];
+
+  while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
+      char* word = strtok(line, DELIMITERS);
+
+      char* first_name = word;
+      word = strtok(NULL, DELIMITERS);
+      char* last_name = word;
+      word = strtok(NULL, DELIMITERS);
+      char* telephone = word;
+      word = strtok(NULL, DELIMITERS);
+      int level_number = atoi(word);
+      word = strtok(NULL, DELIMITERS);
+      int class_number = atoi(word);
+
+      struct Student* student = createStudent(first_name, last_name, telephone);
+      addStudentToLevel(school, student, level_number, class_number);
+
+      word = strtok(NULL, DELIMITERS);
+      while (word != NULL) {
+          int grade = atoi(word);
+          addGrade(student, grade);
+          word = strtok(NULL, DELIMITERS);
+      }
+
+      printf("Telephone: %s\n", telephone);
+  }
+
+  fclose(file);
 }
