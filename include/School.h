@@ -8,7 +8,7 @@
 
 struct School
 {
-    struct Level* levels[NUMBER_OF_LEVELS];
+    struct Level *levels[NUMBER_OF_LEVELS];
     char school_name[SCHOOL_NAME_SIZE];
     size_t num_of_students;
 };

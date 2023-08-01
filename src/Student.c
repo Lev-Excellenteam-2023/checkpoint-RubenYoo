@@ -4,10 +4,12 @@
 #include "../include/Student.h"
 #include <string.h>
 
-struct Student* createStudent(const char* first_name, const char* last_name, const char* telephone) {
+struct Student *createStudent(const char *first_name, const char *last_name, const char *telephone)
+{
 
-    struct Student* student = (struct Student*)malloc(sizeof(struct Student));
-    if (student == NULL) {
+    struct Student *student = (struct Student *)malloc(sizeof(struct Student));
+    if (student == NULL)
+    {
         perror("Memory allocation error");
         exit(1);
     }
@@ -22,26 +24,27 @@ struct Student* createStudent(const char* first_name, const char* last_name, con
     return student;
 }
 
-void freeStudent(struct Student* student) {
+void freeStudent(struct Student *student)
+{
     free(student);
 }
 
-void addGrade(struct Student* student, int grade, int index) {
+void addGrade(struct Student *student, int grade, int index)
+{
     student->grades[index] = grade;
 }
 
-void printStudent(struct Student* student)
+void printStudent(struct Student *student)
 {
     printf("\tFirst Name of the student: %s\n", student->first_name);
     printf("\tLats Name of the student: %s\n", student->last_name);
     printf("\tTelephone Number of the student: %s\n", student->telephone);
 
     for (size_t i = 0; i < NUM_OF_GRADES; i++)
-        printf("\tGrade %zu: %zu\n", (i+1), student->grades[i]);
-    
+        printf("\tGrade %zu: %zu\n", (i + 1), student->grades[i]);
 }
 
-double getStudentAverage(struct Student* student)
+double getStudentAverage(struct Student *student)
 {
     double average = 0;
 
@@ -50,22 +53,23 @@ double getStudentAverage(struct Student* student)
         average += student->grades[i];
     }
 
-    return average/NUM_OF_GRADES;
+    return average / NUM_OF_GRADES;
 }
 
-void editInformation(struct Student* student)
+void editInformation(struct Student *student)
 {
-    enum options {
+    enum options
+    {
 
-    FirstName = '0',
+        FirstName = '0',
 
-    LastName = '1',
+        LastName = '1',
 
-    Telephone = '2',
+        Telephone = '2',
 
-    Grade = '3',
+        Grade = '3',
 
-    Exit = '4'
+        Exit = '4'
     };
 
     char input;
@@ -146,7 +150,7 @@ void editInformation(struct Student* student)
         default:
             printf("\nThere is no item with symbol \"%c\".Please enter a number between 1-10!\nPress any key to continue...",
 
-                       input);
+                   input);
 
             getc(stdin);
 
@@ -156,8 +160,6 @@ void editInformation(struct Student* student)
         }
 
     } while (input != Exit);
-    
-
 }
 
 #endif

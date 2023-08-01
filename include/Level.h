@@ -7,7 +7,7 @@
 
 struct Level
 {
-    struct SchoolClass* classes[NUMBER_OF_CLASSES];
+    struct SchoolClass *classes[NUMBER_OF_CLASSES];
     size_t level_number;
 };
 

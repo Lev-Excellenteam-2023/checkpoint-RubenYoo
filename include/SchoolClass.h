@@ -6,9 +6,10 @@
 
 struct SchoolClass
 {
-    struct Node {
-        struct Student* student;
-        struct Node* next;
+    struct Node
+    {
+        struct Student *student;
+        struct Node *next;
     } *head;
 
     size_t num_of_students;
