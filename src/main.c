@@ -176,7 +176,39 @@ void menu() {
 
 void exportDatabase(struct School* school)
 {
+	FILE* file = fopen("../latest_students_with_class.txt", "w");
+    if (file == NULL)
+    {
+        printf("Error opening file\n");
+        return;
+    }
 
+	for (size_t i = 0; i < NUMBER_OF_LEVELS; i++)
+	{
+		for (size_t j = 0; j < NUMBER_OF_CLASSES; j++)
+		{
+			struct Node* tmp = school->levels[i]->classes[j]->head;
+
+			while (tmp != NULL)
+			{
+				fprintf(file, "%s %s %s %zu %zu", tmp->student->first_name, tmp->student->last_name,
+                tmp->student->telephone, i+1, j+1);
+
+				for (size_t k = 0; k < NUM_OF_GRADES; k++)
+				{
+					fprintf(file, " %zu", tmp->student->grades[k]);
+				}
+
+				fprintf(file, "\n");
+
+				tmp = tmp->next;
+			}
+			
+		}
+		
+	}
+
+    fclose(file);
 }
 
 void printTopNStudentsPerCourse(struct School* school)
@@ -232,7 +264,7 @@ void printTopNStudentsPerCourse(struct School* school)
 							}	
 						}
 					}
-					
+
 					tmp = tmp->next;
 				}
 
