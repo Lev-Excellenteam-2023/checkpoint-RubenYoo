@@ -109,5 +109,23 @@ void printStudentDetails(struct SchoolClass* schoolClass, const char* first_name
     }
 }
 
+struct Student* getStudent(struct SchoolClass* schoolClass, const char* first_name, const char* last_name, const char* telephone)
+{
+    struct Node* tmp = schoolClass->head;
+
+    while (tmp != NULL)
+    {
+        if (strcmp(tmp->student->first_name, first_name) == 0 && strcmp(tmp->student->last_name, last_name) == 0
+            && strcmp(tmp->student->telephone, telephone) == 0)
+        {
+            return tmp->student;
+        }
+
+        tmp = tmp->next;
+    }
+
+    return NULL;
+}
+
 
 #endif

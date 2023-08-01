@@ -18,6 +18,7 @@ void printDatabase(struct School* school);
 void menu();
 void insertNewStudent(struct School* school);
 void deleteStudent(struct School* school);
+void editStudent(struct School* school);
 void searchStudent(struct School* school);
 void handleClosing(struct School* school);
 void printAllStudents(struct School* school);
@@ -113,50 +114,42 @@ void menu() {
 
             case Edit:
 
-                //editStudentGrade();
-
+                editStudent(school);
                 break;
 
             case Search:
 
                 searchStudent(school);
-
                 break;
 
             case Showall:
 
                 printAllStudents(school);
-
                 break;
 
             case Top10:
 
                 //printTopNStudentsPerCourse();
-
                 break;
 
             case UnderperformedStudents:
 
                 //printUnderperformedStudents();
-
                 break;
 
             case Average:
 
                 //printAverage();
-
                 break;
 
             case Export:
 
                 //exportDatabase();
-
                 break;
 
             case Exit:
 
                 handleClosing(school);
-
                 break;
 
             default:
@@ -177,16 +170,49 @@ void menu() {
 
 }
 
+void editStudent(struct School* school)
+{
+	char first_name[SIZE_OF_NAME];
+    char last_name[SIZE_OF_NAME];
+    char telephone_num[TELEPHONE_SIZE];
+
+	printf("\n\tPlease Enter The First Name: ");
+    scanf(" %50[^\n]", first_name); 
+
+    printf("\n\tPlease Enter The Last Name: ");
+    scanf(" %50[^\n]", last_name); 
+
+    printf("\n\tPlease Enter The Telephone: ");
+    scanf(" %10[^\n]", telephone_num);
+
+	fflush(stdin);
+    getc(stdin);
+
+	for (size_t i = 0; i < NUMBER_OF_LEVELS; i++)
+    {
+        for (size_t j = 0; j < NUMBER_OF_CLASSES; j++)
+        {
+			struct Student* student = getStudent(school->levels[i]->classes[j], first_name, last_name, telephone_num);
+			if(student != NULL)
+			{
+				editInformation(student);
+				return;
+			}
+		}
+    }
+	
+}
+
 void searchStudent(struct School* school)
 {
     char first_name[SIZE_OF_NAME];
     char last_name[SIZE_OF_NAME];
 	
 	printf("\n\tPlease Enter The First Name: ");
-    scanf(" %19[^\n]", first_name); 
+    scanf(" %50[^\n]", first_name); 
 
     printf("\n\tPlease Enter The Last Name: ");
-    scanf(" %19[^\n]", last_name); 
+    scanf(" %50[^\n]", last_name); 
 
 	for (size_t i = 0; i < NUMBER_OF_LEVELS; i++)
     {
@@ -207,10 +233,10 @@ void deleteStudent(struct School* school)
     size_t deleted_students = 0;
 
     printf("\n\tPlease Enter The First Name: ");
-    scanf(" %19[^\n]", first_name); 
+    scanf(" %50[^\n]", first_name); 
 
     printf("\n\tPlease Enter The Last Name: ");
-    scanf(" %19[^\n]", last_name); 
+    scanf(" %50[^\n]", last_name); 
 
     printf("\n\tPlease Enter The Telephone: ");
     scanf(" %10[^\n]", telephone_num);
@@ -242,10 +268,10 @@ void insertNewStudent(struct School* school) {
     scanf("%zu", &class_num);
 
     printf("\n\tPlease Enter The First Name: ");
-    scanf(" %19[^\n]", first_name); 
+    scanf(" %50[^\n]", first_name); 
 
     printf("\n\tPlease Enter The Last Name: ");
-    scanf(" %19[^\n]", last_name); 
+    scanf(" %50[^\n]", last_name); 
 
     printf("\n\tPlease Enter The Telephone: ");
     scanf(" %10[^\n]", telephone_num); 

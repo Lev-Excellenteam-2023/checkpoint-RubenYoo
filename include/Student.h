@@ -3,7 +3,7 @@
 
 #define TELEPHONE_SIZE 11
 #define NUM_OF_GRADES 10
-#define SIZE_OF_NAME 20
+#define SIZE_OF_NAME 51
 
 struct Student
 {
