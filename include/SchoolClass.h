@@ -6,13 +6,14 @@
 
 struct SchoolClass
 {
-    struct Node {
-        struct Student* student;
-        struct Node* next;
+    struct Node
+    {
+        struct Student *student;
+        struct Node *next;
     } *head;
 
-    int num_of_students;
-    int class_number;
+    size_t num_of_students;
+    size_t class_number;
 };
 
 #endif
