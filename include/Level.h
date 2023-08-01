@@ -8,7 +8,7 @@
 struct Level
 {
     struct SchoolClass* classes[NUMBER_OF_CLASSES];
-    int level_number;
+    size_t level_number;
 };
 
 #endif

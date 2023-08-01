@@ -17,6 +17,8 @@ struct School* createSchool() {
     {
         school->levels[i] = createLevel(i);
     }
+
+    school->num_of_students = 0;
     
     return school;
 }
@@ -33,6 +35,12 @@ void freeSchool(struct School* school)
 
 void addStudentToLevel(struct School* school, struct Student* student, int level_num, int class_num) {
     addStudentToClass(school->levels[level_num - 1], student, class_num);
+    school->num_of_students += 1;
+}
+
+void setSchoolName(struct School* school, const char* school_name)
+{
+    strcpy(school->school_name, school_name);
 }
 
 #endif

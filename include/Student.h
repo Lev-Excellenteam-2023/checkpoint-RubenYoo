@@ -10,7 +10,7 @@ struct Student
     char first_name[SIZE_OF_NAME];
     char last_name[SIZE_OF_NAME];
     char telephone[TELEPHONE_SIZE];
-    int grades[NUM_OF_GRADES];
+    size_t grades[NUM_OF_GRADES];
 };
 
 #endif

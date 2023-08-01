@@ -16,6 +16,7 @@
 void readDatabase(struct School* school);
 void printDatabase(struct School* school);
 void menu();
+void insertNewStudent(struct School* school);
 
 enum menu_inputs {
 
@@ -42,25 +43,21 @@ enum menu_inputs {
 };
 
 int main() {
-
-  struct School* school = createSchool();
-
-  readDatabase(school);
-  //printDatabase(school);
-
-  menu();
-  
-  freeSchool(school);
-
-  return 0;
+    menu();
+    return 0;
 }
 
 
 void menu() {
 
+    struct School* school = createSchool();
+
+    readDatabase(school);
+    //printDatabase(school);
+
     char input;
 
-    // school.name = "schoolName";
+    setSchoolName(school, "schoolName");
 
     do {
 
@@ -68,7 +65,7 @@ void menu() {
 
         printf("--------------------------------------------------------------------------------\n");
 
-        //printf("Welcome to ( %s ) School!\nYou have inserted ( %zu ) students.\n\n", school.name, school.numOfStudents);
+        printf("Welcome to ( %s ) School!\nYou have inserted ( %zu ) students.\n\n", school->school_name, school->num_of_students);
 
         printf("\t[0] |--> Insert\n");
 
@@ -101,11 +98,12 @@ void menu() {
         switch (input) {
 
             case Insert:
+            {
 
-                //insertNewStudent();
+                insertNewStudent(school);
 
                 break;
-
+            }
             case Delete:
 
                 //deleteStudent();
@@ -178,67 +176,108 @@ void menu() {
 
 }
 
+void insertNewStudent(struct School* school)
+{
+    size_t level_num, class_num;
+    char first_name[SIZE_OF_NAME];
+    char last_name[SIZE_OF_NAME];
+    char telephone_num[TELEPHONE_SIZE];
+
+    /**/
+    printf("\n\tPlease Enter The Level (0-11): ");
+
+    scanf("%zu", &level_num);
+
+    printf("\n\tPlease Enter The Class (0-9): ");
+
+    scanf("%zu", &class_num);
+
+    printf("\n\tPlease Enter The First Name: ");
+
+    fflush(stdin);
+    getc(stdin);
+
+    fgets(first_name, sizeof(first_name), stdin);
+
+    printf("\n\tPlease Enter The Last Name: ");
+
+    fflush(stdin);
+    getc(stdin);
+    fgets(last_name, sizeof(last_name), stdin);
+
+    printf("\n\tPlease Enter The Telephone: ");
+
+    fflush(stdin);
+    getc(stdin);
+    fgets(telephone_num, sizeof(telephone_num), stdin);
+
+    struct Student* my_new_student = createStudent(first_name, last_name, telephone_num);
+    addStudentToLevel(school, my_new_student, level_num, class_num);
+    /**/
+
+}
+
 void printDatabase(struct School* school)
 {
-  for (size_t i = 0; i < NUMBER_OF_LEVELS; i++)
-  {
-    printf("Level Number: %zu\n", i);
-    for (size_t j = 0; j < NUMBER_OF_CLASSES; j++)
+    for (size_t i = 0; i < NUMBER_OF_LEVELS; i++)
     {
-      printf("class Number: %zu\n", j);
-      struct Node* tmp = school->levels[i]->classes[j]->head;
-
-      while(tmp != NULL)
+      printf("Level Number: %zu\n", i);
+      for (size_t j = 0; j < NUMBER_OF_CLASSES; j++)
       {
-        printf("Student informations:\n");
-        printf("First name: %s\n", tmp->student->first_name);
-        printf("Last name: %s\n", tmp->student->last_name);
-        printf("Telephone: %s\n", tmp->student->telephone);
-        
-        for (size_t k = 0; k < NUM_OF_GRADES; k++)
-          printf("Grade %zu: %d\n", k, tmp->student->grades[k]);
+        printf("class Number: %zu\n", j);
+        struct Node* tmp = school->levels[i]->classes[j]->head;
 
-        tmp = tmp->next;
+        while(tmp != NULL)
+        {
+          printf("Student informations:\n");
+          printf("First name: %s\n", tmp->student->first_name);
+          printf("Last name: %s\n", tmp->student->last_name);
+          printf("Telephone: %s\n", tmp->student->telephone);
+          
+          for (size_t k = 0; k < NUM_OF_GRADES; k++)
+            printf("Grade %zu: %zu\n", k, tmp->student->grades[k]);
+
+          tmp = tmp->next;
+        }
       }
     }
-  }
 }
 
 
 void readDatabase(struct School* school)
 {
-  FILE* file = fopen("../students_with_class.txt", "r");
-  if (file == NULL) {
-      perror("Error opening the file");
-      return;
-  }
+    FILE* file = fopen("../students_with_class.txt", "r");
+    if (file == NULL) {
+        perror("Error opening the file");
+        return;
+    }
 
-  char line[MAX_LINE_LENGTH];
+    char line[MAX_LINE_LENGTH];
 
-  while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
-      char* word = strtok(line, DELIMITERS);
+    while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
+        char* word = strtok(line, DELIMITERS);
 
-      char* first_name = word;
-      word = strtok(NULL, DELIMITERS);
-      char* last_name = word;
-      word = strtok(NULL, DELIMITERS);
-      char* telephone = word;
-      word = strtok(NULL, DELIMITERS);
-      int level_number = atoi(word);
-      word = strtok(NULL, DELIMITERS);
-      int class_number = atoi(word);
+        char* first_name = word;
+        word = strtok(NULL, DELIMITERS);
+        char* last_name = word;
+        word = strtok(NULL, DELIMITERS);
+        char* telephone = word;
+        word = strtok(NULL, DELIMITERS);
+        int level_number = atoi(word);
+        word = strtok(NULL, DELIMITERS);
+        int class_number = atoi(word);
 
-      struct Student* student = createStudent(first_name, last_name, telephone);
-      addStudentToLevel(school, student, level_number, class_number);
+        struct Student* student = createStudent(first_name, last_name, telephone);
+        addStudentToLevel(school, student, level_number, class_number);
 
-      word = strtok(NULL, DELIMITERS);
-      for (size_t p = 0; p < NUM_OF_GRADES; p++)
-      {
-        int grade = atoi(word);
-        addGrade(student, grade, p);
-         word = strtok(NULL, DELIMITERS);
-      }
-  }
+        word = strtok(NULL, DELIMITERS);
+        for (size_t p = 0; p < NUM_OF_GRADES; p++)
+        {
+          int grade = atoi(word);
+          addGrade(student, grade, p);
+          word = strtok(NULL, DELIMITERS);
+        }
+    }
 
-  fclose(file);
+    fclose(file);
 }

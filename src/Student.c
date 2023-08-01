@@ -14,7 +14,10 @@ struct Student* createStudent(const char* first_name, const char* last_name, con
     strcpy(student->first_name, first_name);
     strcpy(student->last_name, last_name);
     strcpy(student->telephone, telephone);
-    
+
+    for (size_t i = 0; i < NUM_OF_GRADES; i++)
+        student->grades[i] = 0;
+
     return student;
 }
 
