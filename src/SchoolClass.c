@@ -92,5 +92,22 @@ size_t deleteStudentFromClass(struct SchoolClass* schoolClass, const char* first
     return num_of_deleted_students;
 }
 
+void printStudentDetails(struct SchoolClass* schoolClass, const char* first_name, const char* last_name, size_t level_num, size_t class_num)
+{
+    struct Node* tmp = schoolClass->head;
+
+    while (tmp != NULL)
+    {
+        if (strcmp(tmp->student->first_name, first_name) == 0 && strcmp(tmp->student->last_name, last_name) == 0)
+        {
+            printf("\n\tLevel Number of the student: %zu\n", level_num);
+			printf("\tClass Number of the student: %zu\n", class_num);
+            printStudent(tmp->student);
+        }
+
+        tmp = tmp->next;
+    }
+}
+
 
 #endif

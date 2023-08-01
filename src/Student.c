@@ -29,4 +29,13 @@ void addGrade(struct Student* student, int grade, int index) {
     student->grades[index] = grade;
 }
 
+void printStudent(struct Student* student)
+{
+    printf("\tTelephone Number of the student: %s\n", student->telephone);
+
+    for (size_t i = 0; i < NUM_OF_GRADES; i++)
+        printf("\tGrade %zu: %zu\n", (i+1), student->grades[i]);
+    
+}
+
 #endif

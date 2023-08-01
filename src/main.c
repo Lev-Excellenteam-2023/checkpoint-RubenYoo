@@ -18,6 +18,9 @@ void printDatabase(struct School* school);
 void menu();
 void insertNewStudent(struct School* school);
 void deleteStudent(struct School* school);
+void searchStudent(struct School* school);
+void handleClosing(struct School* school);
+void printAllStudents(struct School* school);
 
 enum menu_inputs {
 
@@ -116,13 +119,13 @@ void menu() {
 
             case Search:
 
-                //searchStudent();
+                searchStudent(school);
 
                 break;
 
             case Showall:
 
-                //printAllStudents();
+                printAllStudents(school);
 
                 break;
 
@@ -152,7 +155,7 @@ void menu() {
 
             case Exit:
 
-                //handleClosing();
+                handleClosing(school);
 
                 break;
 
@@ -171,6 +174,28 @@ void menu() {
         }
 
     } while (input != Exit);
+
+}
+
+void searchStudent(struct School* school)
+{
+    char first_name[SIZE_OF_NAME];
+    char last_name[SIZE_OF_NAME];
+	
+	printf("\n\tPlease Enter The First Name: ");
+    scanf(" %19[^\n]", first_name); 
+
+    printf("\n\tPlease Enter The Last Name: ");
+    scanf(" %19[^\n]", last_name); 
+
+	for (size_t i = 0; i < NUMBER_OF_LEVELS; i++)
+    {
+        for (size_t j = 0; j < NUMBER_OF_CLASSES; j++)
+            printStudentDetails(school->levels[i]->classes[j], first_name, last_name, i, j);
+    }
+
+	fflush(stdin);
+    getc(stdin);
 
 }
 
@@ -232,25 +257,30 @@ void insertNewStudent(struct School* school) {
     getc(stdin);
 }
 
-void printDatabase(struct School* school)
+void handleClosing(struct School* school)
+{
+	freeSchool(school);
+}
+
+void printAllStudents(struct School* school)
 {
     for (size_t i = 0; i < NUMBER_OF_LEVELS; i++)
     {
-      printf("Level Number: %zu\n", i);
+      printf("\tLevel Number: %zu\n", i);
       for (size_t j = 0; j < NUMBER_OF_CLASSES; j++)
       {
-        printf("class Number: %zu\n", j);
+        printf("\tClass Number: %zu\n", j);
         struct Node* tmp = school->levels[i]->classes[j]->head;
 
         while(tmp != NULL)
         {
-          printf("Student informations:\n");
-          printf("First name: %s\n", tmp->student->first_name);
-          printf("Last name: %s\n", tmp->student->last_name);
-          printf("Telephone: %s\n", tmp->student->telephone);
+          printf("\t\tStudent informations:\n");
+          printf("\t\tFirst name: %s\n", tmp->student->first_name);
+          printf("\t\tLast name: %s\n", tmp->student->last_name);
+          printf("\t\tTelephone: %s\n", tmp->student->telephone);
           
           for (size_t k = 0; k < NUM_OF_GRADES; k++)
-            printf("Grade %zu: %zu\n", k, tmp->student->grades[k]);
+            printf("\t\tGrade %zu: %zu\n", k, tmp->student->grades[k]);
 
           tmp = tmp->next;
         }
