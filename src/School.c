@@ -40,7 +40,7 @@ void addStudentToLevel(struct School* school, struct Student* student, int level
 
 void setSchoolName(struct School* school, const char* school_name)
 {
-    strcpy(school->school_name, school_name);
+    strncpy(school->school_name, school_name, SCHOOL_NAME_SIZE);
 }
 
 #endif

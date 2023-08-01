@@ -12,9 +12,9 @@ struct Student* createStudent(const char* first_name, const char* last_name, con
         exit(1);
     }
 
-    strcpy(student->first_name, first_name);
-    strcpy(student->last_name, last_name);
-    strcpy(student->telephone, telephone);
+    strncpy(student->first_name, first_name, SIZE_OF_NAME);
+    strncpy(student->last_name, last_name, SIZE_OF_NAME);
+    strncpy(student->telephone, telephone, TELEPHONE_SIZE);
 
     for (size_t i = 0; i < NUM_OF_GRADES; i++)
         student->grades[i] = 0;
@@ -99,7 +99,7 @@ void editInformation(struct Student* student)
             char first_name[SIZE_OF_NAME];
             printf("\n\tPlease Enter The First Name: ");
             scanf(" %50[^\n]", first_name);
-            strcpy(student->first_name, first_name);
+            strncpy(student->first_name, first_name, SIZE_OF_NAME);
             fflush(stdin);
             getc(stdin);
             break;
@@ -109,7 +109,7 @@ void editInformation(struct Student* student)
             char last_name[SIZE_OF_NAME];
             printf("\n\tPlease Enter The Last Name: ");
             scanf(" %50[^\n]", last_name);
-            strcpy(student->last_name, last_name);
+            strncpy(student->last_name, last_name, SIZE_OF_NAME);
             fflush(stdin);
             getc(stdin);
             break;
@@ -119,7 +119,7 @@ void editInformation(struct Student* student)
             char telephone_num[TELEPHONE_SIZE];
             printf("\n\tPlease Enter The Telephone: ");
             scanf(" %10[^\n]", telephone_num);
-            strcpy(student->telephone, telephone_num);
+            strncpy(student->telephone, telephone_num, TELEPHONE_SIZE);
             fflush(stdin);
             getc(stdin);
             break;

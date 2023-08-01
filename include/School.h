@@ -2,7 +2,7 @@
 #define SCHOOL_H
 
 #define NUMBER_OF_LEVELS 12
-#define SCHOOL_NAME_SIZE 20
+#define SCHOOL_NAME_SIZE 51
 
 #include "Level.h"
 
