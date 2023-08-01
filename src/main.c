@@ -14,7 +14,6 @@
 #define DELIMITERS " \t\n"
 
 void readDatabase(struct School* school);
-void printDatabase(struct School* school);
 void menu();
 void insertNewStudent(struct School* school);
 void deleteStudent(struct School* school);
@@ -22,6 +21,8 @@ void editStudent(struct School* school);
 void searchStudent(struct School* school);
 void handleClosing(struct School* school);
 void printAllStudents(struct School* school);
+void printUnderperformedStudents(struct School* school);
+
 
 enum menu_inputs {
 
@@ -133,8 +134,8 @@ void menu() {
                 break;
 
             case UnderperformedStudents:
-
-                //printUnderperformedStudents();
+				
+                printUnderperformedStudents(school);
                 break;
 
             case Average:
@@ -168,6 +169,26 @@ void menu() {
 
     } while (input != Exit);
 
+}
+
+void printUnderperformedStudents(struct School* school)
+{
+	double min_average = 65;
+	printf("\n\tStudents with an average grade of -65\n");
+	
+	for (size_t i = 0; i < NUMBER_OF_LEVELS; i++)
+    {
+        for (size_t j = 0; j < NUMBER_OF_CLASSES; j++)
+        {
+			struct Node* tmp = school->levels[i]->classes[j]->head;
+
+			for (size_t k = 0; k < school->levels[i]->classes[j]->num_of_students; k++)
+			{
+				if(getStudentAverage(tmp->student) < min_average)
+				printStudent(tmp->student);
+			}
+		}
+    }
 }
 
 void editStudent(struct School* school)

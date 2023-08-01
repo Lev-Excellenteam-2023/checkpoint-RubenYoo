@@ -41,6 +41,18 @@ void printStudent(struct Student* student)
     
 }
 
+double getStudentAverage(struct Student* student)
+{
+    double average = 0;
+
+    for (size_t i = 0; i < NUM_OF_GRADES; i++)
+    {
+        average += student->grades[i];
+    }
+
+    return average/NUM_OF_GRADES;
+}
+
 void editInformation(struct Student* student)
 {
     enum options {
