@@ -36,4 +36,14 @@ void addStudentToClass(struct Level* level, struct Student* student, int class_n
     addStudent(level->classes[class_num - 1], student);
 }
 
+double getLevelAverage(struct Level* level, size_t course_num)
+{
+    double average = 0;
+
+    for (size_t i = 0; i < NUMBER_OF_CLASSES; i++)
+        average += getClassAverage(level->classes[i], course_num);
+
+    return average/NUMBER_OF_CLASSES;
+}
+
 #endif

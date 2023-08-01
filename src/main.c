@@ -22,6 +22,7 @@ void searchStudent(struct School* school);
 void handleClosing(struct School* school);
 void printAllStudents(struct School* school);
 void printUnderperformedStudents(struct School* school);
+void printAverage(struct School* school);
 
 
 enum menu_inputs {
@@ -140,7 +141,7 @@ void menu() {
 
             case Average:
 
-                //printAverage();
+                printAverage(school);
                 break;
 
             case Export:
@@ -169,6 +170,19 @@ void menu() {
 
     } while (input != Exit);
 
+}
+
+void printAverage(struct School* school)
+{	
+	for (size_t i = 0; i < NUM_OF_GRADES; i++)
+	{
+		printf("\n\tCourse Number: %zu\n", i+1);
+		for (size_t k = 0; k < NUMBER_OF_LEVELS; k++)
+		{
+			printf("\t\tLevel Number %zu has an average of: %f\n", k+1, getLevelAverage(school->levels[k], i));
+		}
+	}
+	
 }
 
 void printUnderperformedStudents(struct School* school)

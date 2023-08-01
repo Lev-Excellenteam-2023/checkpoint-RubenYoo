@@ -127,5 +127,18 @@ struct Student* getStudent(struct SchoolClass* schoolClass, const char* first_na
     return NULL;
 }
 
+double getClassAverage(struct SchoolClass* schoolClass, size_t course_num)
+{
+    double average = 0;
+    struct Node* tmp = schoolClass->head;
+
+    for (size_t i = 0; i < schoolClass->num_of_students; i++)
+    {
+        average += tmp->student->grades[course_num];
+        tmp = tmp->next;
+    }
+
+    return average/schoolClass->num_of_students;
+}
 
 #endif
