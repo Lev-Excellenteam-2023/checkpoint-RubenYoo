@@ -45,7 +45,7 @@ void printDatabase(struct School* school)
         printf("Last name: %s\n", tmp->student->last_name);
         printf("Telephone: %s\n", tmp->student->telephone);
         
-        for (size_t k = 0; k < tmp->student->num_of_grades; k++)
+        for (size_t k = 0; k < NUM_OF_GRADES; k++)
           printf("Grade %zu: %d\n", k, tmp->student->grades[k]);
 
         tmp = tmp->next;
@@ -82,10 +82,11 @@ void readDatabase(struct School* school)
       addStudentToLevel(school, student, level_number, class_number);
 
       word = strtok(NULL, DELIMITERS);
-      while (word != NULL) {
-          int grade = atoi(word);
-          addGrade(student, grade);
-          word = strtok(NULL, DELIMITERS);
+      for (size_t p = 0; p < NUM_OF_GRADES; p++)
+      {
+        int grade = atoi(word);
+        addGrade(student, grade, p);
+         word = strtok(NULL, DELIMITERS);
       }
   }
 
