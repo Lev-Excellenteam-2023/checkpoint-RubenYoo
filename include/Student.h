@@ -11,7 +11,6 @@ struct Student
     char last_name[SIZE_OF_NAME];
     char telephone[TELEPHONE_SIZE];
     int grades[NUM_OF_GRADES];
-    int num_of_grades;  
 };
 
 #endif
