@@ -80,6 +80,7 @@ size_t deleteStudentFromClass(struct SchoolClass* schoolClass, const char* first
                 prev->next = tmp->next;
 
             num_of_deleted_students += 1;
+            freeStudent(tmp->student);
             free(tmp);
             schoolClass->num_of_students -= 1;
         }

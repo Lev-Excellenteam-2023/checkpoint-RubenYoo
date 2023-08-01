@@ -23,6 +23,8 @@ void handleClosing(struct School* school);
 void printAllStudents(struct School* school);
 void printUnderperformedStudents(struct School* school);
 void printAverage(struct School* school);
+void printTopNStudentsPerCourse(struct School* school);
+void exportDatabase(struct School* school);
 
 
 enum menu_inputs {
@@ -131,7 +133,7 @@ void menu() {
 
             case Top10:
 
-                //printTopNStudentsPerCourse();
+                printTopNStudentsPerCourse(school);
                 break;
 
             case UnderperformedStudents:
@@ -146,7 +148,7 @@ void menu() {
 
             case Export:
 
-                //exportDatabase();
+                exportDatabase(school);
                 break;
 
             case Exit:
@@ -170,6 +172,77 @@ void menu() {
 
     } while (input != Exit);
 
+}
+
+void exportDatabase(struct School* school)
+{
+
+}
+
+void printTopNStudentsPerCourse(struct School* school)
+{
+	for (size_t i = 0; i < NUMBER_OF_LEVELS; i++)
+	{
+		struct Student* students[10];
+
+		for (size_t l = 0; l < 10; l++)
+			students[l] = NULL;
+
+		printf("\n\tLevel Number: %zu\n", i+1);
+
+		for (size_t j = 0; j < NUMBER_OF_CLASSES; j++)
+		{
+			for (size_t p = 0; p < NUM_OF_GRADES; p++)
+			{
+				printf("\n\tCourse Number: %zu\n", p+1);
+
+				struct Node* tmp = school->levels[i]->classes[j]->head;
+
+				for (size_t k = 0; k < school->levels[i]->classes[j]->num_of_students; k++)
+				{
+					size_t flag = 0;
+					size_t min_student = 101;
+
+					for (size_t x = 0; x < 10; x++)
+					{
+						if(students[x] == NULL)
+						{
+							students[x] = tmp->student;
+							flag = 1;
+							break;
+						}
+					}
+					
+					if(flag == 0)
+					{
+						for (size_t x = 0; x < 10; x++)
+						{
+							
+							if(students[x]->grades[p] < min_student)
+								min_student = students[x]->grades[p];
+						}
+
+						for (size_t x = 0; x < 10; x++)
+						{
+							if(students[x]->grades[p] == min_student && students[x]->grades[p] < tmp->student->grades[p])
+							{
+								students[x] = tmp->student;
+								flag = 1;
+								break;
+							}	
+						}
+					}
+					
+					tmp = tmp->next;
+				}
+
+				for (size_t k = 0; k < 10; k++)
+				{
+					printf("\n\t\tStudent name: %s %s\n", students[k]->first_name, students[k]->last_name);
+				}
+			}
+		}
+	}
 }
 
 void printAverage(struct School* school)
