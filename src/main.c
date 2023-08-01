@@ -17,6 +17,7 @@ void readDatabase(struct School* school);
 void printDatabase(struct School* school);
 void menu();
 void insertNewStudent(struct School* school);
+void deleteStudent(struct School* school);
 
 enum menu_inputs {
 
@@ -98,16 +99,13 @@ void menu() {
         switch (input) {
 
             case Insert:
-            {
-
+            
                 insertNewStudent(school);
-
                 break;
-            }
+            
             case Delete:
 
-                //deleteStudent();
-
+                deleteStudent(school);
                 break;
 
             case Edit:
@@ -176,45 +174,62 @@ void menu() {
 
 }
 
-void insertNewStudent(struct School* school)
+void deleteStudent(struct School* school)
 {
+    char first_name[SIZE_OF_NAME];
+    char last_name[SIZE_OF_NAME];
+    char telephone_num[TELEPHONE_SIZE] = "";
+    size_t deleted_students = 0;
+
+    printf("\n\tPlease Enter The First Name: ");
+    scanf(" %19[^\n]", first_name); 
+
+    printf("\n\tPlease Enter The Last Name: ");
+    scanf(" %19[^\n]", last_name); 
+
+    printf("\n\tPlease Enter The Telephone: ");
+    scanf(" %10[^\n]", telephone_num);
+
+    for (size_t i = 0; i < NUMBER_OF_LEVELS; i++)
+    {
+        for (size_t j = 0; j < NUMBER_OF_CLASSES; j++)
+        { 
+            deleted_students = deleteStudentFromClass(school->levels[i]->classes[j], first_name, last_name, telephone_num);
+            school->num_of_students -= deleted_students;
+        } 
+    }
+
+    fflush(stdin);
+    getc(stdin);
+    
+}
+
+void insertNewStudent(struct School* school) {
     size_t level_num, class_num;
     char first_name[SIZE_OF_NAME];
     char last_name[SIZE_OF_NAME];
     char telephone_num[TELEPHONE_SIZE];
 
-    /**/
-    printf("\n\tPlease Enter The Level (0-11): ");
-
+    printf("\n\tPlease Enter The Level (1-10): ");
     scanf("%zu", &level_num);
 
-    printf("\n\tPlease Enter The Class (0-9): ");
-
+    printf("\n\tPlease Enter The Class (1-12): ");
     scanf("%zu", &class_num);
 
     printf("\n\tPlease Enter The First Name: ");
-
-    fflush(stdin);
-    getc(stdin);
-
-    fgets(first_name, sizeof(first_name), stdin);
+    scanf(" %19[^\n]", first_name); 
 
     printf("\n\tPlease Enter The Last Name: ");
-
-    fflush(stdin);
-    getc(stdin);
-    fgets(last_name, sizeof(last_name), stdin);
+    scanf(" %19[^\n]", last_name); 
 
     printf("\n\tPlease Enter The Telephone: ");
-
-    fflush(stdin);
-    getc(stdin);
-    fgets(telephone_num, sizeof(telephone_num), stdin);
+    scanf(" %10[^\n]", telephone_num); 
 
     struct Student* my_new_student = createStudent(first_name, last_name, telephone_num);
     addStudentToLevel(school, my_new_student, level_num, class_num);
-    /**/
 
+    fflush(stdin);
+    getc(stdin);
 }
 
 void printDatabase(struct School* school)
