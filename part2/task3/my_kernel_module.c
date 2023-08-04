@@ -1,0 +1,24 @@
+#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("RubenYoo");
+MODULE_DESCRIPTION("A simple example Linux module.");
+MODULE_VERSION("0.01");
+
+char* mystr = "World";
+module_param(mystr, charp, 0000);
+MODULE_PARM_DESC(mystr, "A string input");
+
+static int __init lkm_example_init(void) {
+	printk(KERN_INFO "Hello, %s!\n", mystr);
+	return 0;
+}
+
+static void __exit lkm_example_exit(void) {
+	printk(KERN_INFO "Goodbye, %s!\n", mystr);
+}
+
+module_init(lkm_example_init);
+module_exit(lkm_example_exit);
